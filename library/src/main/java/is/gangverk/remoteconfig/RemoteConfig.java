@@ -65,7 +65,7 @@ public class RemoteConfig {
     }
 
     public void setDefaults (String configFileUnderAssets) {
-        if (Strings.isNullOrEmpty(configFileUnderAssets) ) {
+        if (!Strings.isNullOrEmpty(configFileUnderAssets) ) {
             mRemoteConfigFile = configFileUnderAssets;
         }
     }
