@@ -26,6 +26,8 @@ import android.content.SharedPreferences.Editor;
 import android.os.AsyncTask;
 import android.support.v4.content.LocalBroadcastManager;
 
+import com.google.common.base.Strings;
+
 public class RemoteConfig {
     private static final String LAST_DOWNLOADED_CONFIG_KEY = "lastDownloadedConfig";
     // This is just a dot, since we have regular expression we have to have the backslashes as well
@@ -41,6 +43,8 @@ public class RemoteConfig {
     private Context mContext;
     private ArrayList<RemoteConfigListener> mListeners;
     private int mVersion;
+
+    private String mRemoteConfigFile = REMOTE_CONFIG_FILE;
 
     public RemoteConfig() {}
 
@@ -58,6 +62,12 @@ public class RemoteConfig {
             }
         }
         return instance;
+    }
+
+    public void setDefaults (String configFileUnderAssets) {
+        if (Strings.isNullOrEmpty(configFileUnderAssets) ) {
+            mRemoteConfigFile = configFileUnderAssets;
+        }
     }
 
     /**
@@ -227,7 +237,7 @@ public class RemoteConfig {
         InputStream is = null;
         StringBuilder total = new StringBuilder();
         try {
-            is = mContext.getResources().getAssets().open(REMOTE_CONFIG_FILE);
+            is = mContext.getResources().getAssets().open(mRemoteConfigFile);
             BufferedReader r = new BufferedReader(new InputStreamReader(is));
             String line;
             while ((line = r.readLine()) != null) {
