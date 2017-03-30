@@ -30,7 +30,7 @@ public class RemoteConfig {
     private static final String LAST_DOWNLOADED_CONFIG_KEY = "lastDownloadedConfig";
     // This is just a dot, since we have regular expression we have to have the backslashes as well
     private static final String DEEP_DICTIONARY_SEPARATOR_REGEX = "\\.";
-    private static final String DEEP_DICTIONARY_SEPARATOR = ".";
+    private static final String DEEP_DICTIONARY_SEPARATOR = "";
     private static final String REMOTE_CONFIG_FILE = "rc.json";
     private static final String SP_VERSION_KEY = "rc_version";
     private static final String LOCAL_BROADCAST_INTENT = "remote_config_download_complete";
@@ -357,7 +357,14 @@ public class RemoteConfig {
 
         @Override
         protected JSONObject doInBackground(Void... params) {
-            return Utils.readJSONFeed(mConfigLocation.toString(), null);
+            try {
+                String jsonString = Downloader.readJSONFeedString(mConfigLocation.toString());
+                if(jsonString==null) return null;
+                return new JSONObject(jsonString);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return null;
         }
 
         @Override

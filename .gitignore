@@ -20,3 +20,7 @@ local.properties
 .project
 .metadata
 .settings
+.gradle
+build
+gen
+target

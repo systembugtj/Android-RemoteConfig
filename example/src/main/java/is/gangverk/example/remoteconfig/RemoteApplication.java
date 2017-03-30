@@ -9,6 +9,6 @@ public class RemoteApplication extends Application {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		RemoteConfig.getInstance().init(getApplicationContext(), REMOTE_CONFIG_VERSION);
+		RemoteConfig.getInstance().init(getApplicationContext(), REMOTE_CONFIG_VERSION, true);
 	}	
 }
